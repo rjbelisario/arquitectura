@@ -1,7 +1,7 @@
 # Tarea I
 
 ## Tema: Propuesta de Servidor para una Red de Entrega de Contenido (CDN)
-Esta propuesta de ordenador esta pensada para la construccion de un nodo CDN que mejore la transferencias de datos desde diversos puntos alejados del servidor principal.
+Esta Propuesta de Servidor para una Red de Entrega de Contenido (CDN) esta pensada para mejorar los tiempos de transferencias de datos empleando nodos en diferentes ubicaciones que permite acelerar la entrega del contenido al estar mas cerca del consumidor final. Este proceso se hace a traves del almacenamiento cache, procedimiento  que almacena temporalmente copias de los archivos, de modo que pueda acceder al contenido de Internet con un dispositivo o navegador web de forma más rápida a través de un servidor cercano.
 
 
 ## Componentes
