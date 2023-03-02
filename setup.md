@@ -12,7 +12,7 @@ Esta Propuesta de Servidor para una Red de Entrega de Contenido (CDN) esta pensa
 | REFRIGERACION PROC | Corsair iCUE H150i Elite Capellix Enfriador líquido de CPU  | 1 | [link](https://www.amazon.com/dp/B08Q86DSTX)  |
 | TARJETA MADRE | Asus WS C246 PRO  | 1 | [link](https://www.amazon.com/dp/B07H8M7S6X)  |
 | MEMORIA RAM | Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200  | 2 | [link](https://www.amazon.com/dp/B07RW6Z692)  |
-| DISCO DURO | Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200 | 5 | [link](https://www.amazon.com/dp/B073SBRHH6)  |
+| DISCO DURO | M.2 2280 Unidad de estado sólido | 5 | [link](https://www.amazon.com/dp/B073SBRHH6)  |
 | CASE | Thermaltake Core W200 | 1 | [link](https://www.amazon.com/dp/B01EGBZA1C) |
 | TARJETA DE RED | Intel Corp X550T2 X550 | 1 | [link](https://www.amazon.com/dp/B01D3ZE0FY) 
 | TARJETA GRAFICA | XFX ATI Radeon HD6670 1 GB DDR5 | 1 | [link](https://www.amazon.com/dp/B005PX9HJW) |
