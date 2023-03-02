@@ -8,7 +8,7 @@ Esta Propuesta de Servidor para una Red de Entrega de Contenido (CDN) esta pensa
 
 | Componente | Modelo | CANTIDAD | PRECIO_GUIA |
 |     :---:      |     :---:      |     :---:      |     :---:      |
-| PROCESADOR | Procesador Intel Xeon E-2136  | 1 | [link](https://www.amazon.com/dp/B07KNFQ3G5)  |
+| PROCESADOR | Procesador Intel Xeon E-2124  | 1 | [link](https://www.amazon.com/dp/B07KNFR6LR)  |
 | REFRIGERACION PROC | Corsair iCUE H150i Elite Capellix Enfriador líquido de CPU  | 1 | [link](https://www.amazon.com/dp/B08Q86DSTX)  |
 | TARJETA MADRE | Asus WS C246 PRO  | 1 | [link](https://www.amazon.com/dp/B07H8M7S6X)  |
 | MEMORIA RAM | Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200  | 2 | [link](https://www.amazon.com/dp/B07RW6Z692)  |
