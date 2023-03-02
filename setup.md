@@ -9,12 +9,12 @@ Esta Propuesta de Servidor para una Red de Entrega de Contenido (CDN) esta pensa
 | Componente | Modelo | CANTIDAD | PRECIO USD | ENLACE TIENDA |
 |     :---:      |     :---:      |     :---:      |     :---:      |     :---:      |
 | PROCESADOR | Procesador Intel Xeon E-2124  | 1 | 150.00 | [link](https://www.amazon.com/dp/B07KNFR6LR)  |
-| REFRIGERACION PROC | Corsair iCUE H150i Elite Capellix Enfriador líquido de CPU  | 1 | 345.00 | [link](https://www.amazon.com/dp/B08Q86DSTX)  |
+| REFRIGERACION PROC | NZXT Kraken Z53 RGB 9.449 in  | 1 | 306.91 | [link](https://www.amazon.com//dp/B0B9M8GWB7)  |
 | TARJETA MADRE | Asus WS C246 PRO  | 1 | 349.99 | [link](https://www.amazon.com/dp/B07H8M7S6X)  |
 | MEMORIA RAM | Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200  | 2 | 74.99 | [link](https://www.amazon.com/dp/B07RW6Z692)  |
-| DISCO DURO | M.2 2280 Unidad de estado sólido | 5 | 129.99 | [link](https://www.amazon.com/dp/B073SBRHH6)  |
+| DISCO DURO | SAMSUNG 870 EVO 2.5 pulgadas SATA III SSD | 5 | 169.99 | [link](https://www.amazon.com/dp/B08QB93S6R)  |
 | CASE | Thermaltake Core W200 | 1 | 499.99 | [link](https://www.amazon.com/dp/B01EGBZA1C) |
 | TARJETA DE RED | Intel Corp X550T2 X550 | 1 | 320.00 | [link](https://www.amazon.com/dp/B01D3ZE0FY) 
 | TARJETA GRAFICA | XFX ATI Radeon HD6670 1 GB DDR5 | 1 | 198.95 | [link](https://www.amazon.com/dp/B005PX9HJW) |
-| FUENTE DE ALIMENTACION | Corsair Serie RMX (2021), RM1000x, 1000 W | 1 | 189.99 | [link](https://www.amazon.com/dp/B08R5PH1VY) |
+| FUENTE DE ALIMENTACION | Corsair Serie RMx (2021), RM850x, 850 vatios | 1 | 149.99 | [link](https://www.amazon.com/dp/B08R5JPTMZ) |
 | PASTA TERMICA | Thermal Grizzly Conductonaut | 1 | 22.99 | [link](https://www.amazon.com/dp/B078J4PSHM/) |
