@@ -1,7 +1,7 @@
 # Tarea I
 
 ## Tema: Propuesta de Servidor para una Red de Entrega de Contenido (CDN)
-Esta Propuesta de Servidor para una Red de Entrega de Contenido (CDN) esta pensada para mejorar los tiempos de transferencias de datos empleando nodos en diferentes ubicaciones que permite acelerar la entrega del contenido al estar mas cerca del consumidor final. Este proceso se hace a traves del almacenamiento cache, procedimiento  que almacena temporalmente copias de los archivos, de modo que pueda acceder al contenido de Internet con un dispositivo o navegador web de forma más rápida a través de un servidor cercano.
+Esta propuesta de Servidor para una Red de Entrega de Contenido (CDN) está pensada para mejorar los tiempos de transferencia de datos empleando nodos en diferentes ubicaciones que permiten acelerar la entrega del contenido al estar más cerca del consumidor final. Este proceso se hace a través del almacenamiento caché, procedimiento que almacena temporalmente copias de los archivos, de modo que pueda acceder al contenido de Internet con un dispositivo o navegador web de forma más rápida a través de un servidor cercano.
 
 
 ## Componentes
@@ -12,7 +12,7 @@ Esta Propuesta de Servidor para una Red de Entrega de Contenido (CDN) esta pensa
 | REFRIGERACION PROC | NZXT Kraken Z53 RGB 9.449 in  | 1 | 306.91 | [link](https://www.amazon.com//dp/B0B9M8GWB7)  |
 | TARJETA MADRE | Asus WS C246 PRO  | 1 | 349.99 | [link](https://www.amazon.com/dp/B07H8M7S6X)  |
 | MEMORIA RAM | Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200  | 2 | 74.99 | [link](https://www.amazon.com/dp/B07RW6Z692)  |
-| DISCO DURO | SAMSUNG 870 EVO 2.5 pulgadas SATA III SSD | 5 | 169.99 | [link](https://www.amazon.com/dp/B08QB93S6R)  |
+| DISCO DURO | SAMSUNG 870 EVO 2.5 pulgadas SATA III SSD 2TB | 5 | 169.99 | [link](https://www.amazon.com/dp/B08QB93S6R)  |
 | CASE | Thermaltake Core W200 | 1 | 499.99 | [link](https://www.amazon.com/dp/B01EGBZA1C) |
 | TARJETA DE RED | Intel Corp X550T2 X550 | 1 | 320.00 | [link](https://www.amazon.com/dp/B01D3ZE0FY) 
 | FUENTE DE ALIMENTACION | Corsair Serie RMx (2021), RM850x, 850 vatios | 1 | 149.99 | [link](https://www.amazon.com/dp/B08R5JPTMZ) 
@@ -48,7 +48,7 @@ FCLGA1151
 Dado que el servidor debe ser fiable y tendra cargas pesadas de trabajo de manera constante se escogio refrigeracion liquida para una mayor eficencia y mantener la temperatura de manera constante.
 
 ### WS C246 PRO
-Esta diseñada para estaciones de trabajo. Optimizada para aplicaciones de trabajo sin descanso. Ideal ....
+Esta placa esta optimizada para el trabajo sin descanso, soporta una mayor cantidad de discos duros que otros modelo y presenta un diseño que mejora la disipacion de los componentes.
 #### Caracteristicas
 >Fabricante Asus
 
@@ -63,3 +63,21 @@ DDR4-2666
 LGA1151
 
 [Mayor informacion...](https://www.asus.com/es/Commercial-Servers-Workstations/WS-C246-PRO/)
+
+### Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200
+Se eligio comprar 4 memorias de 16 cada una para un total de 64GB de memoria RAM para que el sistema siempre cuente con memoria disponible en caso de ejecutar aplicaciones que requieran guardar una gran cantidad de datos en MEMORIA
+
+### SAMSUNG 870 EVO 2.5 pulgadas SATA III SSD
+Al estar enfocada nuestra propuesta en la entrega de contenido digital necesitabamos contar con un alto almacenamiento para guardar una gran cantidad de datos en cache de los servicios en la nube que usaran nuestro NODO para ello se doto al equipo de 10TB de disco de almacenamiento SSD.
+
+### Thermaltake Core W200
+Para un facil mantenimiento de nuestro servidor se escogio este CASE que beneficia tambien a la refrigeracion del equipo, tambien es capaz de colocar una mayor cantidad de discos duros en su interior.
+
+### Intel Corp X550T2 X550
+Se propuso esta tarjeta de red con capacidad de 10GB de transferencia de datos para mejorar de manera sustancial la entrega de datos desde el servidor al consumidor final.
+
+### Corsair Serie RMx (2021), RM850x, 850 vatios
+Se propuso esta fuente de poder para que nuestro equipo tenga energia de manera fiable y de buena calidad para que el equipo tenga la maxima proteccion y los componentes sean mas durables con el tiempo
+
+### Kooling Monster KOLD-01
+Se usara para el mantenimiento del sistema de refrigeracion con el tiempo.
