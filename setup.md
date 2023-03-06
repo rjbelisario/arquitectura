@@ -45,10 +45,10 @@ FCLGA1151
 [Mayor informacion...](https://www.intel.com/content/www/us/en/products/sku/191040/intel-xeon-e2236-processor-12m-cache-3-40-ghz/specifications.html)
 
 ### NZXT Kraken Z53 RGB 9.449 in
-Dado que el servidor debe ser fiable y tendra cargas pesadas de trabajo de manera constante se escogio refrigeracion liquida para una mayor eficencia y mantener la temperatura de manera constante.
+Dado que el servidor debe ser fiable y tendrá cargas pesadas de trabajo de manera constante, se escogió la  refrigeración liquida para una mayor eficiencia y mantener la temperatura de manera constante.
 
 ### WS C246 PRO
-Esta placa esta optimizada para el trabajo sin descanso, soporta una mayor cantidad de discos duros que otros modelo y presenta un diseño que mejora la disipacion de los componentes.
+Esta placa esta optimizada para el trabajo sin descanso, soporta una mayor cantidad de discos duros que otros modelo y presenta un diseño que mejora la disipación de los componentes.
 #### Caracteristicas
 >Fabricante Asus
 
@@ -65,19 +65,19 @@ LGA1151
 [Mayor informacion...](https://www.asus.com/es/Commercial-Servers-Workstations/WS-C246-PRO/)
 
 ### Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200
-Se eligio comprar 4 memorias de 16 cada una para un total de 64GB de memoria RAM para que el sistema siempre cuente con memoria disponible en caso de ejecutar aplicaciones que requieran guardar una gran cantidad de datos en MEMORIA
+Se eligió comprar 4 memorias de 16GB cada una para un total de 64GB de memoria RAM para que el sistema siempre cuente con memoria disponible en caso de ejecutar aplicaciones que requieran guardar una gran cantidad de datos en memoria.
 
 ### SAMSUNG 870 EVO 2.5 pulgadas SATA III SSD
-Al estar enfocada nuestra propuesta en la entrega de contenido digital necesitabamos contar con un alto almacenamiento para guardar una gran cantidad de datos en cache de los servicios en la nube que usaran nuestro NODO para ello se doto al equipo de 10TB de disco de almacenamiento SSD.
+Al estar enfocada nuestra propuesta en la entrega de contenido digital, necesitábamos contar con un alto almacenamiento para guardar una gran cantidad de datos en caché de los servicios en la nube que usarán nuestro NODO; para ello se dotó al equipo de 10TB(2TB*5) de disco de almacenamiento SSD.
 
 ### Thermaltake Core W200
-Para un facil mantenimiento de nuestro servidor se escogio este CASE que beneficia tambien a la refrigeracion del equipo, tambien es capaz de colocar una mayor cantidad de discos duros en su interior.
+Para un fácil mantenimiento de nuestro servidor se escogió este CASE, que además de beneficiar a la refrigeración del equipo, también es capaz de soportar una mayor cantidad de discos duros en su interior.
 
 ### Intel Corp X550T2 X550
-Se propuso esta tarjeta de red con capacidad de 10GB de transferencia de datos para mejorar de manera sustancial la entrega de datos desde el servidor al consumidor final.
+Se propuso esta tarjeta de red con capacidad de 10GB de transferencia de datos para mejorar de manera sustancial la entrega de datos desde el servidor al consumidor final. 
 
 ### Corsair Serie RMx (2021), RM850x, 850 vatios
-Se propuso esta fuente de poder para que nuestro equipo tenga energia de manera fiable y de buena calidad para que el equipo tenga la maxima proteccion y los componentes sean mas durables con el tiempo
+Se propuso esta fuente de poder para que nuestro equipo tenga energía de manera fiable y de buena calidad para que el equipo tenga la máxima protección y los componentes sean mas durables con el tiempo.
 
 ### Kooling Monster KOLD-01
-Se usara para el mantenimiento del sistema de refrigeracion con el tiempo.
+Se usará para el mantenimiento del sistema de refrigeración con el tiempo.
