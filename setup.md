@@ -9,15 +9,15 @@ Esta propuesta de Servidor para una Red de Entrega de Contenido (CDN) está pens
 | Componente | Modelo | CANTIDAD | PRECIO USD | ENLACE TIENDA |
 |     :---:      |     :---:      |     :---:      |     :---:      |     :---:      |
 | PROCESADOR | Procesador Intel Xeon E-2236  | 1 | 360.63 | [link](https://www.amazon.com/dp/B087Z5RVVT)  |
-| REFRIGERACION PROC | NZXT Kraken Z53 RGB 9.449 in  | 1 | 306.91 | [link](https://www.amazon.com//dp/B0B9M8GWB7)  |
+| REFRIGERACION PROC | NZXT Kraken Z53 RGB 9.449 in  | 1 | 306.76 | [link](https://www.amazon.com//dp/B0B9M8GWB7)  |
 | TARJETA MADRE | Asus WS C246 PRO  | 1 | 349.99 | [link](https://www.amazon.com/dp/B07H8M7S6X)  |
-| MEMORIA RAM | Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200  | 2 | 74.99 | [link](https://www.amazon.com/dp/B07RW6Z692)  |
+| MEMORIA RAM | Corsair Vengeance LPX 64 GB (2 x 32 GB) DDR4 3200  | 1 | 164.99 | [link](https://www.amazon.com/dp/B07Y4ZZ7LQ)  |
 | DISCO DURO | SAMSUNG 870 EVO 2.5 pulgadas SATA III SSD 2TB | 5 | 169.99 | [link](https://www.amazon.com/dp/B08QB93S6R)  |
 | CASE | Thermaltake Core W200 | 1 | 499.99 | [link](https://www.amazon.com/dp/B01EGBZA1C) |
-| TARJETA DE RED | Intel Corp X550T2 X550 | 1 | 320.00 | [link](https://www.amazon.com/dp/B01D3ZE0FY) 
+| TARJETA DE RED | Intel Corp X550T2 X550 | 1 | 309.99 | [link](https://www.amazon.com/dp/B01D3ZE2EI) 
 | FUENTE DE ALIMENTACION | Corsair Serie RMx (2021), RM850x, 850 vatios | 1 | 149.99 | [link](https://www.amazon.com/dp/B08R5JPTMZ) 
-| PASTA TERMICA | Kooling Monster KOLD-01 | 1 | 10.50 | [link](https://www.amazon.com/dp/B09NQLM7TG) 
-| TOTAL | | | 2,997.94 | |
+| PASTA TERMICA | ARCTIC MX-4 (0.14 oz) | 1 | 5.39 | [link](https://www.amazon.com/dp/B07L9BDY3T) 
+| TOTAL | | | 2,997.68 | |
 
 ## Componentes elegidos
 
@@ -64,8 +64,8 @@ LGA1151
 
 [Mayor informacion...](https://www.asus.com/es/Commercial-Servers-Workstations/WS-C246-PRO/)
 
-### Corsair Vengeance LPX 32GB (2X16GB) DDR4 3200
-Se eligió comprar 4 memorias de 16GB cada una para un total de 64GB de memoria RAM para que el sistema siempre cuente con memoria disponible en caso de ejecutar aplicaciones que requieran guardar una gran cantidad de datos en memoria.
+### Corsair Vengeance LPX 64 GB (2 x 32 GB) DDR4 3200
+Se eligió comprar 2 memorias de 32GB cada una para un total de 64GB de memoria RAM para que el sistema siempre cuente con memoria disponible en caso de ejecutar aplicaciones que requieran guardar una gran cantidad de datos en memoria.
 
 ### SAMSUNG 870 EVO 2.5 pulgadas SATA III SSD
 Al estar enfocada nuestra propuesta en la entrega de contenido digital, necesitábamos contar con un alto almacenamiento para guardar una gran cantidad de datos en caché de los servicios en la nube que usarán nuestro NODO; para ello se dotó al equipo de 10TB(2TB*5) de disco de almacenamiento SSD.
@@ -79,5 +79,5 @@ Se propuso esta tarjeta de red con capacidad de 10GB de transferencia de datos p
 ### Corsair Serie RMx (2021), RM850x, 850 vatios
 Se propuso esta fuente de poder para que nuestro equipo tenga energía de manera fiable y de buena calidad para que el equipo tenga la máxima protección y los componentes sean mas durables con el tiempo.
 
-### Kooling Monster KOLD-01
+### ARCTIC MX-4 (0.14 oz)
 Se usará para el mantenimiento del sistema de refrigeración con el tiempo.
