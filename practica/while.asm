@@ -16,7 +16,7 @@
 	li $s0, 0 # variable = 0
 
 	Mientras:
-		bgt $zero,$t1, Salida # Si 0>$t1 hacer
+		bgt $zero,$t1, Salida # Si 0<$t1 hacer
 		addi $s0, $s0, 2 #sumar 2 a la variable
 		addi $t1, $t1, -1 # i++ o i--
 		j Mientras
