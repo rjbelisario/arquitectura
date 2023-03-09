@@ -1,19 +1,12 @@
-	li $s0, 0 # a
+	li $s0, 4 # a
 	li $s1, 2 # b
 	li $v0, 1
-	j sub
+	jal func
+	sge $a0,$v1,$zero
+	syscall
+	li $v0,10
+	syscall
 	
-	sub:
-		sub $s2,$s0,$s1
-		j Main
-	Main: 
-		bge $s2,$zero, True
-		li $a0, 0
-		syscall
-		j EXIT
-	
-	True:
-		li $a0, 1
-		syscall
-		j EXIT
-	EXIT:
+	func:
+		sub $v1,$s0,$s1
+		jr $ra
