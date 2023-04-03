@@ -15,7 +15,7 @@ main:
 
 #ALGORITMO PRINCIPAL
 SUM:
-    #Guardamos los datos en una pila
+    #Estructuramos los datos en una pila
     addi    $sp, $sp, -8
     sw      $s0, 4($sp)
     sw      $ra, 0($sp)
