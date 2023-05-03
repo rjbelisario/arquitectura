@@ -9,7 +9,7 @@ int main() {
     random_device n_aleatorio;
     mt19937 mt(n_aleatorio());
     uniform_int_distribution<int> dist(1, 100);
-    cout << "Ingrese el tamaño entero: ";
+    cout << "Ingrese el tamaño en numeros entero: ";
     cin >> tamano;
     // Genera el archivo
     ofstream archivo("archivo.txt");
