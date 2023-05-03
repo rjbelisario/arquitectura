@@ -28,9 +28,9 @@ int main() {
         v.push_back(valor);
     }
 
-    for (int i=0; i < tamano; i++)
-        cout << v[i] << " ";
-    cout << endl;
+//    for (int i=0; i < tamano; i++)
+//        cout << v[i] << " ";
+//    cout << endl;
     int n,elem1,elem2, band=1;
     while(band<0 or band>0){
         cout << "Tamano del Vector " << v.size() << endl;
