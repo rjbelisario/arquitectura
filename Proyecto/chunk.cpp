@@ -4,19 +4,31 @@
 using namespace std;
 
 void divide(vector<int> v, int n, vector<vector<int>>& chunks) {
-    int chunk_size = v.size() / n;
+    int tamano_vector = v.size();
+    int tamano_particion = tamano_vector / n;
+    int r = tamano_vector % n;
+    int aux = 0;
+
     for (int i = 0; i < n; i++) {
-        if (i == n-1) {
-            chunks.push_back(vector<int>(v.begin() + i*chunk_size, v.end()));
-        } else {
-            chunks.push_back(vector<int>(v.begin() + i*chunk_size, v.begin() + (i+1)*chunk_size));
-        }
+        int extra = (i < r) ? 1 : 0;
+        int inicio = aux;
+        int fin = aux + tamano_particion + extra;
+        chunks.push_back(vector<int>(v.begin() + inicio, v.begin() + fin));
+        aux = fin;
     }
 }
 
 int main() {
-    vector<int> v = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 21};
-    for (int i=0; i < v.size(); i++)
+    FILE* archivo = fopen("archivo.txt", "r");
+    int tamano,valor;
+    fscanf(archivo, "%d", &tamano);
+    vector<int> v;
+    for (int i = 0; i < tamano; i++) {
+        fscanf(archivo, "%d", &valor);
+        v.push_back(valor);
+    }
+
+    for (int i=0; i < tamano; i++)
         cout << v[i] << " ";
     cout << endl;
     int n,elem1,elem2, band=1;
