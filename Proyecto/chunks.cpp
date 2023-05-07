@@ -36,14 +36,11 @@ int main() {
             v[k++] = pixel[1];
             v[k++] = pixel[2];
         }
+    }
     // Dividir el vector en chunks de tamaño n
     int n = 9;
     vector<vector<int>> chunks;
     dividir_vector(v, n, chunks);
-
-    // Guardar los chunks en un archivo de texto
-    guardar_chunks(chunks, "chunks.txt");
-
 
     // Crear la imagen a partir de los datos del vector
     int width = chunks.size(); // El ancho de la imagen es igual al número de chunks
@@ -57,6 +54,7 @@ int main() {
             imagen.at<Vec3b>(y, x) = pixel_value;
         }
     }
+
     // Mostrar la imagen en una ventana
     namedWindow("Imagen RGB generada", WINDOW_NORMAL);
     imshow("Imagen RGB generada", imagen);
@@ -64,6 +62,9 @@ int main() {
 
     // Guardar la imagen en un archivo
     imwrite("imagen_generada.png", imagen);
+
+    // Guardar los chunks en un archivo de texto
+    guardar_chunks(chunks, "chunks.txt");
 
     return 0;
 }
