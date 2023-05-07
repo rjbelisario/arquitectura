@@ -19,7 +19,6 @@ void guardar_chunks(const vector<vector<int>>& chunks, const string& filename) {
         for (int i : chunk) {
             archivo << i << " ";
         }
-        archivo << endl;
     }
     archivo.close();
 }
@@ -43,7 +42,7 @@ int main() {
     vector<vector<int>> chunks;
     dividir_vector(v, n, chunks);
 
-    // Guardar los chunks en un archivo de texto
+    // Guardar los chunks en un archivo de texto lineal
     guardar_chunks(chunks, "chunks.txt");
 
     return 0;
