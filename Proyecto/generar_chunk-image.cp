@@ -1,50 +1,50 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include <opencv2/opencv.hpp>
 
 using namespace std;
 using namespace cv;
 
-void divide(vector<int> v, int size, vector<vector<int>>& chunks) {
-    int tamano_vector = v.size();
-    for (int i = 0; i < tamano_vector; i += size) {
-        chunks.push_back(vector<int>(v.begin() + i, v.begin() + i + size));
+void cargar_chunks(const string& filename, vector<vector<int>>& chunks) {
+    ifstream archivo(filename);
+    string linea;
+    while (getline(archivo, linea)) {
+        stringstream ss(linea);
+        int valor;
+        vector<int> chunk;
+        while (ss >> valor) {
+            chunk.push_back(valor);
+        }
+        chunks.push_back(chunk);
     }
-}
-
-void cargar_datos(vector<int>& v,int& tamano){
-    int valor;
-    FILE* archivo = fopen("archivo.txt", "r");
-    fscanf(archivo, "%d", &tamano);
-    for (int i = 0; i < tamano; i++) {
-        fscanf(archivo, "%d", &valor);
-        v.push_back(valor);
-    }
-    fclose(archivo);
+    archivo.close();
 }
 
 int main() {
-    int tamano, chunk_size = 3;
-    vector<int> v;
+    // Cargar los chunks desde el archivo de texto
     vector<vector<int>> chunks;
-    cargar_datos(v, tamano);
-    divide(v, chunk_size, chunks);
+    cargar_chunks("chunks.txt", chunks);
 
     // Crear la imagen a partir de los datos del vector
-    int width = (v.size() / chunk_size);
-    Mat image(width, 1, CV_8UC3, Scalar(0, 0, 0));
-    for (int i = 0; i < width; i++) {
-        Vec3b pixel_value(chunks[i][2], chunks[i][1], chunks[i][0]);
-        image.at<Vec3b>(i, 0) = pixel_value;
+    int width = chunks.size(); // El ancho de la imagen es igual al número de chunks
+    int height = chunks[0].size() / 3; // La altura de la imagen es igual al tamaño de cada chunk dividido por 3
+    Mat imagen(height, width, CV_8UC3, Scalar(0, 0, 0));
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            int i = y * 3;
+            Vec3b pixel_value(chunks[x][i+2], chunks[x][i+1], chunks[x][i]);
+            imagen.at<Vec3b>(y, x) = pixel_value;
+        }
     }
 
     // Mostrar la imagen en una ventana
     namedWindow("Imagen RGB generada", WINDOW_NORMAL);
-    imshow("Imagen RGB generada", image);
+    imshow("Imagen RGB generada", imagen);
     waitKey(0);
 
     // Guardar la imagen en un archivo
-    imwrite("imagen_rgb_generada.png", image);
+    imwrite("imagen_generada.png", imagen);
 
     return 0;
 }
