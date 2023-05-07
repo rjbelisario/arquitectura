@@ -14,7 +14,7 @@ void divide(vector<int> v, int size, vector<vector<int>>& chunks) {
 
 void cargar_datos(vector<int>& v,int& tamano){
     int valor;
-    FILE* archivo = fopen("vector.txt", "r");
+    FILE* archivo = fopen("archivo.txt", "r");
     fscanf(archivo, "%d", &tamano);
     for (int i = 0; i < tamano; i++) {
         fscanf(archivo, "%d", &valor);
