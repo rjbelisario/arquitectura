@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <sstream>
 #include <opencv2/opencv.hpp>
 
 using namespace std;
