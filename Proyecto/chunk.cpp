@@ -14,7 +14,7 @@ void divide(vector<int> v, int size, vector<vector<int>>& chunks) {
 
 void cargar_datos(vector<int>& v,int& tamano){
     int valor;
-    FILE* archivo = fopen("archivo.txt", "r");
+    FILE* archivo = fopen("vector.txt", "r");
     fscanf(archivo, "%d", &tamano);
     for (int i = 0; i < tamano; i++) {
         fscanf(archivo, "%d", &valor);
@@ -24,33 +24,27 @@ void cargar_datos(vector<int>& v,int& tamano){
 }
 
 int main() {
-    int tamano, chunk_size = 4;
+    int tamano, chunk_size = 3;
     vector<int> v;
     vector<vector<int>> chunks;
     cargar_datos(v, tamano);
     divide(v, chunk_size, chunks);
 
     // Crear la imagen a partir de los datos del vector
-    int width = chunk_size;
-    int height = (chunks.size() + width - 1) / width;
-    Mat image(height * 100, width * 100, CV_8UC1, Scalar(0));
-    int k = 0;
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            if (k < chunks.size()) {
-                int pixel_value = chunks[k++][0];
-                rectangle(image, Point(x * 100 + 10, y * 100 + 10), Point(x * 100 + 90, y * 100 + 90), Scalar(pixel_value), -1);
-            }
-        }
+    int width = (v.size() / chunk_size);
+    Mat image(width, 1, CV_8UC3, Scalar(0, 0, 0));
+    for (int i = 0; i < width; i++) {
+        Vec3b pixel_value(chunks[i][2], chunks[i][1], chunks[i][0]);
+        image.at<Vec3b>(i, 0) = pixel_value;
     }
 
     // Mostrar la imagen en una ventana
-    namedWindow("Figura generada", WINDOW_NORMAL);
-    imshow("Figura generada", image);
+    namedWindow("Imagen RGB generada", WINDOW_NORMAL);
+    imshow("Imagen RGB generada", image);
     waitKey(0);
 
     // Guardar la imagen en un archivo
-    imwrite("figura_generada.png", image);
+    imwrite("imagen_rgb_generada.png", image);
 
     return 0;
 }
