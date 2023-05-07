@@ -30,6 +30,7 @@ int main() {
     int width = chunks.size(); // El ancho de la imagen es igual al número de chunks
     int height = chunks[0].size() / 3; // La altura de la imagen es igual al tamaño de cada chunk dividido por 3
     Mat imagen(height, width, CV_8UC3, Scalar(0, 0, 0));
+    int k = 0;
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
             int i = y * 3;
