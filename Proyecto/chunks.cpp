@@ -8,8 +8,9 @@ using namespace cv;
 
 void dividir_vector(const vector<int>& v, int n, vector<vector<int>>& chunks) {
     int tamano_vector = v.size();
-    for (int i = 0; i < tamano_vector; i += n) {
-        chunks.push_back(vector<int>(v.begin() + i, v.begin() + i + n));
+    int tamano_chunk = static_cast<int>(ceil(static_cast<double>(n) / 3) * 3); // Ajustar el tamaño del chunk para que sea un múltiplo de 3
+    for (int i = 0; i < tamano_vector; i += tamano_chunk) {
+        chunks.push_back(vector<int>(v.begin() + i, v.begin() + i + tamano_chunk));
     }
 }
 
@@ -46,7 +47,7 @@ int main() {
     int width = chunks.size(); // El ancho de la imagen es igual al número de chunks
     int height = chunks[0].size() / 3; // La altura de la imagen es igual al tamaño de cada chunk dividido por 3
     Mat imagen(height, width, CV_8UC3, Scalar(0, 0, 0));
-    int k = 0;
+    k = 0;
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
             int i = y * 3;
