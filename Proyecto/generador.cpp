@@ -13,13 +13,11 @@ int main() {
     cin >> tamano;
     // Genera el archivo
     ofstream archivo("archivo.txt");
-    archivo << tamano << ' '; // tamaño en la primera posicion
+    archivo << tamano << ' ' <<endl; // tamaño en la primera posicion
     // llena el archivo
     for (int i = 0; i < tamano; ++i) {
         aleatorio = dist(n_aleatorio);
-        archivo << aleatorio;
-        if (i != tamano-1)
-            archivo << " ";
+        archivo << aleatorio << " ";
     }
     archivo << endl;
     archivo.close();//cierra el archivo
