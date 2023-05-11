@@ -44,8 +44,9 @@ void divide_mmap(char* data, int tamano, int n, vector<vector<int>>& chunks) {
     }
 }
 void unificar_vector(const vector<vector<int>>& chunks, vector<int>& resultado) {
-    for (const auto& subvector : chunks) { // Recorre cada subvector en chunks
-        resultado.insert(resultado.end(), subvector.begin(), subvector.end()); // Agrega los elementos del subvector al resultado
+    for (int i = 0; i < chunks.size(); i++) {
+        const vector<int>& subvector = chunks[i];
+        resultado.insert(resultado.end(), subvector.begin(), subvector.end());
     }
 }
 void cargar_datos(vector<int>& v,int& tamano, const string& filename){
