@@ -119,7 +119,7 @@ int main() {
     int tamano, n=10;
     vector<int> v,v2;
     vector<vector<int>> chunks;
-    cargar_datos(v,tamano, "archivo.txt");
+    //cargar_datos(v,tamano, "archivo.txt");
     //divide(v, n, chunks);
     //for (int i = 0; i < tamano; ++i) {
     //    printf("%d ", strtol(p, &endptr, 10));
