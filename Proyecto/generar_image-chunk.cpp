@@ -10,7 +10,7 @@
 #include <opencv2/opencv.hpp>
 using namespace std;
 using namespace cv;
- 
+ // no funciona el mmap en este codigo
 void divide(vector<int> v, int n, vector<vector<int>>& chunks) {
     int tamano_vector = v.size();
     int elementos_faltantes = n - (tamano_vector % n);
