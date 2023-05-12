@@ -11,38 +11,28 @@
 using namespace std;
 using namespace cv;
  // no funciona el mmap en este codigo
-void divide(vector<int> v, int n, vector<vector<int>>& chunks) {
+void divide(const vector<int>& v, int n, vector<vector<int>>& chunks) {
     int tamano_vector = v.size();
-    int elementos_faltantes = n - (tamano_vector % n);
-    if (tamano_vector % n != 0) {
-        for (int i = 0; i < elementos_faltantes; i++) {
-            v.push_back(0);
+    for (int i = 0; i < tamano_vector; i += n) {
+        vector<int> chunk(v.begin() + i, v.begin() + i + n);
+        if (chunk.size() < n) {
+            chunk.resize(n, 0);
         }
-    }
- 
-    for (int i = 0; i < v.size(); i += n) {
-        chunks.push_back(vector<int>(v.begin() + i, v.begin() + i + n));
+        chunks.push_back(chunk);
     }
 }
 void divide_mmap(char* data, int tamano, int n, vector<vector<int>>& chunks) {
-    int elementos_faltantes = n - (tamano % n);
-    if (tamano % n != 0) {
-        for (int i = 0; i < elementos_faltantes; i++) {
-            // agregar elementos faltantes con valor cero
-            chunks.push_back(vector<int>(n, 0));
-        }
-    }
- 
     char* endptr;
-    int* p_data = reinterpret_cast<int*>(data); // convertir el puntero a int*
- 
     for (int i = 0; i < tamano; i += n) {
-        vector<int> subvector;
-        for (int j = i + 1; j <= i + n; j++) {
-            subvector.push_back(strtol(data, &endptr, 10));
-            data = endptr + 1;
+        vector<int> chunk;
+        for (int j = i; j < i + n; j++) {
+            chunk.push_back(strtol(data, &endptr, 10));
+            data = endptr;
         }
-        chunks.push_back(subvector);
+        if (chunk.size() < n) {
+            chunk.resize(n, 0);
+        }
+        chunks.push_back(chunk);
     }
 }
 void unificar_vector(const vector<vector<int>>& chunks, vector<int>& resultado) {
