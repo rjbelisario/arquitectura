@@ -10,7 +10,7 @@
 #include <opencv2/opencv.hpp>
 using namespace std;
 using namespace cv;
- // no funciona el mmap en este codigo
+
 void divide(const vector<int>& v, int n, vector<vector<int>>& chunks) {
     int tamano_vector = v.size();
     for (int i = 0; i < tamano_vector; i += n) {
@@ -21,24 +21,9 @@ void divide(const vector<int>& v, int n, vector<vector<int>>& chunks) {
         chunks.push_back(chunk);
     }
 }
-void divide_mmap(char* data, int tamano, int n, vector<vector<int>>& chunks) {
-    char* endptr;
-    for (int i = 0; i < tamano; i += n) {
-        vector<int> chunk;
-        for (int j = i; j < i + n; j++) {
-            chunk.push_back(strtol(data, &endptr, 10));
-            data = endptr;
-        }
-        if (chunk.size() < n) {
-            chunk.resize(n, 0);
-        }
-        chunks.push_back(chunk);
-    }
-}
 void unificar_vector(const vector<vector<int>>& chunks, vector<int>& resultado) {
-    for (int i = 0; i < chunks.size(); i++) {
-        const vector<int>& subvector = chunks[i];
-        resultado.insert(resultado.end(), subvector.begin(), subvector.end());
+    for (const auto& subvector : chunks) { // Recorre cada subvector en chunks
+        resultado.insert(resultado.end(), subvector.begin(), subvector.end()); // Agrega los elementos del subvector al resultado
     }
 }
 void cargar_datos(vector<int>& v,int& tamano, const string& filename){
@@ -61,23 +46,47 @@ void guardar_chunks(const vector<vector<int>>& chunks, const string& filename) {
     }
     archivo.close();
 }
-void cargar_datos_mmap(vector<int>& v, int& tamano, char** data, const string& filename) {
+void divide_mmap(char* data, int tamano, int n, int** chunks, int& num_chunks) {
+    char* endptr;
+    num_chunks = tamano / n + (tamano % n != 0); // Calcular el número de subvectores
+    *chunks = new int[num_chunks*n]; // Reservar memoria para todos los subvectores
+    int* p = *chunks;
+    for (int i = 0; i < tamano; i++) {
+        *p = strtol(data, &endptr, 10);
+        p++;
+        data = endptr;
+    }
+    for (int i = tamano; i < num_chunks*n; i++) {
+        *(*chunks + i) = 0; // Inicializar los elementos restantes a cero
+    }
+}
+void guardar_chunks_mmap(int* chunks, int tamano, int n, const string& filename) {
+    ofstream archivo(filename);
+    int num_chunks = tamano / n + (tamano % n != 0); // Calcular el número de subvectores
+    int k = 0;
+    for (int i = 0; i < num_chunks; i++) {
+        for (int j = 0; j < n; j++) {
+            archivo << to_string(*(chunks + k)) << " ";
+            k++;
+        }
+        archivo << endl;
+        if (k >= tamano) {
+            break;
+        }
+    }
+    archivo.close();
+}
+void cargar_datos_mmap(int& tamano, char** data, const string& filename) {
     int fd = open(filename.c_str(), O_RDONLY);
     struct stat st;
     fstat(fd, &st);
     *data = static_cast<char*>(mmap(nullptr, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0));
     char* endptr;
     tamano = strtol(*data, &endptr, 10);
-    v.resize(tamano);
     char* p = endptr;
     *data = p; 
-    for (int i = 0; i < tamano; i++) {
-        v[i] = strtol(p, &endptr, 10);
-        p = endptr;
-    }
     close(fd);
 }
- 
 void vector_a_imagen(const vector<int>& v, int filas, int columnas, Mat& imagen) {
     // Copiar los valores del vector en los píxeles de la imagen
     int k = 0;
