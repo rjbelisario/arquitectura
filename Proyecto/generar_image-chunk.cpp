@@ -54,7 +54,7 @@ void mmap_a_imagen(int* data, int filas, int columnas, Mat& imagen) {
     }
 }
 
-void imagen_a_mmap(const Mat& imagen, int* data, int& tamano) {
+void imagen_a_mmap(const Mat& imagen, char* data, int& tamano) {
     tamano = 0;
     int k = 0;
     for (int y = 0; y < imagen.rows; y++) {
@@ -88,21 +88,26 @@ int main() {
     imagen.convertTo(imagen, CV_8UC3);
     int filas = imagen.rows;
     int columnas = imagen.cols;
-    imagen_a_mmap(imagen, reinterpret_cast<int**>(&data), tamano);
+    int tamano_total = filas * columnas * 3;
+    int fd = open("imagen.mmap", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+    ftruncate(fd, tamano_total);
+    data = reinterpret_cast<char*>(mmap(NULL, tamano_total, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
+    imagen_a_mmap(imagen, reinterpret_cast<int*>(data), tamano);
 
     // divide mmap y guarda chunks
     divide_mmap(data, tamano, n, &chunks);
     guardar_chunks_mmap(chunks, tamano, n, "chunks.txt");
 
     // unificar mmap
-    char* resultado = new char[tamano * sizeof(int)];
-    unificar_mmap(data, tamano * sizeof(int), n, resultado);
+    char* resultado = new char[tamano_total];
+    unificar_mmap(data, tamano_total, n, resultado);
 
     // mmap a imagen
     Mat imagen_resultante(filas, columnas, CV_8UC3);
     mmap_a_imagen(reinterpret_cast<int*>(resultado), filas, columnas, imagen_resultante);
     imwrite("imagen_resultante.png", imagen_resultante);
  
-    munmap(data, tamano * sizeof(int));
+    munmap(data, tamano_total);
+    close(fd);
     return 0;
 }
