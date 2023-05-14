@@ -1,113 +1,107 @@
-#include <sstream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
 #include <iostream>
+#include <fstream>
+#include <unistd.h>
 #include <opencv2/opencv.hpp>
+
 using namespace std;
 using namespace cv;
 
-void divide_mmap(char* data, int tamano, int n, int** chunks) {
-    char* endptr;
-    int num_chunks;
-    num_chunks = tamano / n + (tamano % n != 0); // Calcular el número de subvectores
-    *chunks = new int[num_chunks*n]; // Reservar memoria para todos los subvectores
-    int* p = *chunks;
-    for (int i = 0; i < tamano; i++) {
-        *p = strtol(data, &endptr, 10);
-        p++;
-        data = endptr;
-    }
-    for (int i = tamano; i < num_chunks*n; i++) {
-        *(*chunks + i) = 0; // Inicializar los elementos restantes a cero
-    }
-}
-void guardar_chunks_mmap(int* chunks, int tamano, int n, const string& filename) {
-    ofstream archivo(filename);
-    int num_chunks = tamano / n + (tamano % n != 0); // Calcular el número de subvectores
-    int k = 0;
-    for (int i = 0; i < num_chunks; i++) {
-        for (int j = 0; j < n; j++) {
-            archivo << to_string(*(chunks + k)) << " ";
-            k++;
-        }
-        archivo << endl;
-        if (k >= tamano) {
-            break;
-        }
-    }
-    archivo.close();
-}
-void mmap_a_imagen(int* data, int filas, int columnas, Mat& imagen) {
-    int k = 0;
-    for (int y = 0; y < filas; y++) {
-        for (int x = 0; x < columnas; x++) {
-            Vec3b& pixel = imagen.at<Vec3b>(y, x);
-            pixel[0] = *(data + k++);
-            pixel[1] = *(data + k++);
-            pixel[2] = *(data + k++);
-        }
-    }
-}
-
-void imagen_a_mmap(const Mat& imagen, char* data, int& tamano) {
-    tamano = 0;
+void imagen_a_memoria(const Mat& imagen, int*& memoria, int& tamano) {
+    tamano = imagen.rows * imagen.cols * 3;
+    memoria = new int[tamano];
     int k = 0;
     for (int y = 0; y < imagen.rows; y++) {
         for (int x = 0; x < imagen.cols; x++) {
             Vec3b pixel = imagen.at<Vec3b>(y, x);
-            *(data + k++) = pixel[0];
-            *(data + k++) = pixel[1];
-            *(data + k++) = pixel[2];
-            tamano++;
+            memoria[k++] = pixel[0];
+            memoria[k++] = pixel[1];
+            memoria[k++] = pixel[2];
         }
     }
 }
 
-void unificar_mmap(char* data, int tamano, int n, char* resultado) {
-    int num_chunks = tamano / n + (tamano % n != 0);
-    int offset = 0;
-    for (int i = 0; i < num_chunks; i++) {
-        int chunk_size = min(n, tamano - i * n);
-        memcpy(resultado + offset, data + i * n, chunk_size * sizeof(int));
-        offset += chunk_size * sizeof(int);
+void dividir_memoria(int* memoria, int tamano, int n, int** subvectores, int& tamano_subvector) {
+    int tamano_subvector_int = tamano / n;
+    tamano_subvector = tamano_subvector_int * sizeof(int);
+    *subvectores = new int[tamano_subvector_int * n];
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < tamano_subvector_int; j++) {
+            (*subvectores)[i * tamano_subvector_int + j] = memoria[i * tamano_subvector_int + j];
+        }
     }
 }
 
-int main() {
-    char* data;
-    int* chunks;
-    int tamano, n = 10;
+void unificar_memoria(int* memoria, int tamano, int n, int* resultado) {
+    int tamano_subvector_int = tamano / n;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < tamano_subvector_int; j++) {
+            resultado[i * tamano_subvector_int + j] = memoria[i * tamano_subvector_int + j];
+        }
+    }
+}
 
-    // imagen a mmap
+void memoria_a_imagen(int* memoria, int filas, int columnas, Mat& imagen) {
+    int k = 0;
+    for (int y = 0; y < filas; y++) {
+        for (int x = 0; x < columnas; x++) {
+            Vec3b& pixel = imagen.at<Vec3b>(y, x);
+            pixel[0] = memoria[k++];
+            pixel[1] = memoria[k++];
+            pixel[2] = memoria[k++];
+        }
+    }
+}
+
+void guardar_subvectores(int* subvectores, int tamano_subvector, int n, const char* archivo) {
+    ofstream ofs(archivo, ios::out | ios::binary);
+    ofs.write(reinterpret_cast<const char*>(&n), sizeof(n));
+    ofs.write(reinterpret_cast<const char*>(&tamano_subvector), sizeof(tamano_subvector));
+    for (int i = 0; i < n; i++) {
+        ofs.write(reinterpret_cast<const char*>(subvectores + i * tamano_subvector / sizeof(int)), tamano_subvector);
+    }
+    ofs.close();
+}
+
+void cargar_subvectores(int** subvectores, int& tamano_subvector, int& n, const char* archivo) {
+    ifstream ifs(archivo, ios::in | ios::binary);
+    ifs.read(reinterpret_cast<char*>(&n), sizeof(n));
+    ifs.read(reinterpret_cast<char*>(&tamano_subvector), sizeof(tamano_subvector));
+    *subvectores = new int[tamano_subvector / sizeof(int) * n];
+    for (int i = 0; i < n; i++) {
+        ifs.read(reinterpret_cast<char*>(*subvectores + i * tamano_subvector / sizeof(int)), tamano_subvector);
+    }
+    ifs.close();
+}
+
+int main() {
+    int* memoria;
+    int* subvectores;
+    int tamano, tamano_subvector, n = 10;
+
+    // imagen a memoria
     Mat imagen = imread("imagen.png");
     imagen.convertTo(imagen, CV_8UC3);
     int filas = imagen.rows;
     int columnas = imagen.cols;
-    int tamano_total = filas * columnas * 3;
-    int fd = open("imagen.mmap", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-    ftruncate(fd, tamano_total);
-    data = reinterpret_cast<char*>(mmap(NULL, tamano_total, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
-    imagen_a_mmap(imagen, reinterpret_cast<int*>(data), tamano);
+    imagen_a_memoria(imagen, memoria, tamano);
 
-    // divide mmap y guarda chunks
-    divide_mmap(data, tamano, n, &chunks);
-    guardar_chunks_mmap(chunks, tamano, n, "chunks.txt");
+    // divide memoria y guarda subvectores
+    dividir_memoria(memoria, tamano, n, &subvectores, tamano_subvector);
+    guardar_subvectores(subvectores, tamano_subvector, n, "subvectores.bin");
 
-    // unificar mmap
-    char* resultado = new char[tamano_total];
-    unificar_mmap(data, tamano_total, n, resultado);
+    // unificar memoria
+    int* resultado = new int[tamano];
+    unificar_memoria(subvectores, tamano_subvector * n, n, resultado);
 
-    // mmap a imagen
+    // memoria a imagen
     Mat imagen_resultante(filas, columnas, CV_8UC3);
-    mmap_a_imagen(reinterpret_cast<int*>(resultado), filas, columnas, imagen_resultante);
+    memoria_a_imagen(resultado, filas, columnas, imagen_resultante);
     imwrite("imagen_resultante.png", imagen_resultante);
- 
-    munmap(data, tamano_total);
-    close(fd);
+
+    // limpiar memoria
+    delete[] memoria;
+    delete[] subvectores;
+    delete[] resultado;
+
     return 0;
 }
