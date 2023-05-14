@@ -46,8 +46,9 @@ void guardar_chunks(const vector<vector<int>>& chunks, const string& filename) {
     }
     archivo.close();
 }
-void divide_mmap(char* data, int tamano, int n, int** chunks, int& num_chunks) {
+void divide_mmap(char* data, int tamano, int n, int** chunks) {
     char* endptr;
+    int num_chunks;
     num_chunks = tamano / n + (tamano % n != 0); // Calcular el número de subvectores
     *chunks = new int[num_chunks*n]; // Reservar memoria para todos los subvectores
     int* p = *chunks;
@@ -76,7 +77,7 @@ void guardar_chunks_mmap(int* chunks, int tamano, int n, const string& filename)
     }
     archivo.close();
 }
-void cargar_datos_mmap(int& tamano, char** data, const string& filename) {
+void cargar_datos_mmap(int& tamano, char* data, const string& filename) {
     int fd = open(filename.c_str(), O_RDONLY);
     struct stat st;
     fstat(fd, &st);
@@ -112,36 +113,67 @@ void imagen_a_vector(const Mat& imagen, vector<int>& v) {
         }
     }
 }
- 
+
+void mmap_a_imagen(int* data, int filas, int columnas, Mat& imagen) {
+    int k = 0;
+    for (int y = 0; y < filas; y++) {
+        for (int x = 0; x < columnas; x++) {
+            Vec3b& pixel = imagen.at<Vec3b>(y, x);
+            pixel[0] = *(data + k++);
+            pixel[1] = *(data + k++);
+            pixel[2] = *(data + k++);
+        }
+    }
+}
+
+void imagen_a_mmap(const Mat& imagen, int* data, int& tamano) {
+    int k = 0;
+    for (int y = 0; y < imagen.rows; y++) {
+        for (int x = 0; x < imagen.cols; x++) {
+            Vec3b pixel = imagen.at<Vec3b>(y, x);
+            *(data + k++) = pixel[0];
+            *(data + k++) = pixel[1];
+            *(data + k++) = pixel[2];
+            tamano++;
+        }
+    }
+}
+
+void unificar_mmap(char* data, int tamano, int n, char* resultado) {
+    int num_chunks = tamano / n + (tamano % n != 0);
+    int offset = 0;
+    for (int i = 0; i < num_chunks; i++) {
+        int chunk_size = min(n, tamano - i * n);
+        memcpy(resultado + offset, data + i * n, chunk_size);
+        offset += chunk_size;
+    }
+}
+
 int main() {
     char* data;
-    int tamano, n=10;
-    vector<int> v,v2;
-    vector<vector<int>> chunks;
-    //cargar_datos(v,tamano, "archivo.txt");
-    //divide(v, n, chunks);
-    //for (int i = 0; i < tamano; ++i) {
-    //    printf("%d ", strtol(p, &endptr, 10));
-    //    p = endptr;
-    //}
- 
-    // imagen a vector
+    int* chunks;
+    int tamano, n = 10;
+
+    // imagen a mmap
     Mat imagen = imread("imagen.png");
-    imagen_a_vector(imagen, v);
- 
-    //chunks y unificar chunks
-    divide(v, n, chunks);
-    guardar_chunks(chunks, "chunks.txt");
-    unificar_vector(chunks,v2);
- 
-    // vector a imagen
-    int tamano_vector = v2.size();
-    int filas = sqrt(tamano_vector / 3);
-    int columnas = tamano_vector / (filas * 3);
+    imagen.convertTo(imagen, CV_8UC3);
+    int filas = imagen.rows;
+    int columnas = imagen.cols;
+    imagen_a_mmap(imagen, reinterpret_cast<int**>(&data), tamano);
+
+    // divide mmap y guarda chunks
+    divide_mmap(data, tamano, n, &chunks);
+    guardar_chunks_mmap(chunks, tamano, n, "chunks.txt");
+
+    // unificar mmap
+    char* resultado = new char[tamano * sizeof(int)];
+    unificar_mmap(data, tamano * sizeof(int), n, resultado);
+
+    // mmap a imagen
     Mat imagen_resultante(filas, columnas, CV_8UC3);
-    vector_a_imagen(v2, filas, columnas, imagen_resultante);
+    mmap_a_imagen(reinterpret_cast<int*>(resultado), filas, columnas, imagen_resultante);
     imwrite("imagen_resultante.png", imagen_resultante);
  
-    //munmap(data, tamano * sizeof(int) + sizeof(int));
+    munmap(data, tamano * sizeof(int) + sizeof(int));
     return 0;
 }
