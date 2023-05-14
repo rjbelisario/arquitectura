@@ -46,9 +46,9 @@ void guardar_chunks(const vector<vector<int>>& chunks, const string& filename) {
     }
     archivo.close();
 }
-void divide_mmap(char* data, int tamano, int n, int** chunks, int& num_chunks) {
+void divide_mmap(char* data, int tamano, int n, int** chunks) {
     char* endptr;
-    num_chunks = tamano / n + (tamano % n != 0); // Calcular el número de subvectores
+    int num_chunks = tamano / n + (tamano % n != 0); // Calcular el número de subvectores
     *chunks = new int[num_chunks*n]; // Reservar memoria para todos los subvectores
     int* p = *chunks;
     for (int i = 0; i < tamano; i++) {
@@ -91,7 +91,7 @@ int main() {
     string archivo_entrada;
     char* data;
     int* chunks;
-    int tamano, n, num_chunks;
+    int tamano, n;
     vector<int> v,v2;
     cout << "Ingrese el nombre del archivo incluyendo la extension: ";
     cin >> archivo_entrada;
@@ -118,7 +118,7 @@ int main() {
         cout << "Archivo mapeado en memoria exitosamente. Tiempo de ejecución: " << tiempo_cargar_datos.count() << " segundos" << endl;
 
         auto start_divide_mmap = high_resolution_clock::now();
-        divide_mmap(data, tamano, n, &chunks, num_chunks);
+        divide_mmap(data, tamano, n, &chunks);
         auto end_divide_mmap = high_resolution_clock::now();
         duration<double> tiempo_divide_mmap = end_divide_mmap - start_divide_mmap;
         cout << "Datos divididos en " << n << " chunks en memoria. Tiempo de ejecución: " << tiempo_divide_mmap.count() << " segundos" << endl;
