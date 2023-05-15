@@ -1,5 +1,4 @@
 #include <fstream>
-#include <vector>
 #include <string>
 #include <sys/mman.h>
 #include <fcntl.h>
@@ -10,42 +9,6 @@
 #include <chrono>
 using namespace std;
 using namespace chrono;
-
-void divide(const vector<int>& v, int n, vector<vector<int>>& chunks) {
-    int tamano_vector = v.size();
-    for (int i = 0; i < tamano_vector; i += n) {
-        vector<int> chunk(v.begin() + i, v.begin() + i + n);
-        if (chunk.size() < n) {
-            chunk.resize(n, 0);
-        }
-        chunks.push_back(chunk);
-    }
-}
-void unificar_vector(const vector<vector<int>>& chunks, vector<int>& resultado) {
-    for (const auto& subvector : chunks) { // Recorre cada subvector en chunks
-        resultado.insert(resultado.end(), subvector.begin(), subvector.end()); // Agrega los elementos del subvector al resultado
-    }
-}
-void cargar_datos(vector<int>& v,int& tamano, const string& filename){
-    ifstream archivo(filename);
-    int valor;
-    archivo >> tamano;
-    for (int i = 0; i < tamano; i++) {
-        archivo >> valor;
-        v.push_back(valor);
-    }
-    archivo.close();
-}
-void guardar_chunks(const vector<vector<int>>& chunks, const string& filename) {
-    ofstream archivo(filename);
-    for (const vector<int>& chunk : chunks) {
-        for (int i : chunk) {
-            archivo << i << " ";
-        }
-        archivo << endl;
-    }
-    archivo.close();
-}
 void divide_mmap(char* data, int tamano, int n, int** chunks) {
     char* endptr;
     int num_chunks = tamano / n + (tamano % n != 0); // Calcular el número de subvectores
@@ -92,7 +55,6 @@ int main() {
     char* data;
     int* chunks;
     int tamano, n;
-    vector<int> v,v2;
     cout << "Ingrese el nombre del archivo incluyendo la extension: ";
     cin >> archivo_entrada;
     if (ifstream(archivo_entrada)) {
@@ -122,16 +84,6 @@ int main() {
         auto end_divide_mmap = high_resolution_clock::now();
         duration<double> tiempo_divide_mmap = end_divide_mmap - start_divide_mmap;
         cout << "Datos divididos en " << n << " chunks en memoria. Tiempo de ejecución: " << tiempo_divide_mmap.count() << " segundos" << endl;
-
-
-        //divide(v, n, chunks);
-        //unificar_vector(chunks,v2);
-        //for (int i = 0; i < tamano; ++i) {
-        //    printf("%d ", strtol(p, &endptr, 10));
-        //    p = endptr;
-        //}
-        //guardar_chunks(chunks, "chunks.txt");
-
 
         auto start_guardar_chunks_mmap = high_resolution_clock::now();        
         guardar_chunks_mmap(chunks, tamano, n, "chunks.txt");
