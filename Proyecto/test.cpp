@@ -167,12 +167,10 @@ int main() {
      
         // Convertir el bloque unificado a una imagen en OpenCV
      
-        int tamano_datos = num_sub_bloques * n * sizeof(int)/4;
-        int filas = sqrt(tamano_datos / 3);
-        int columnas = tamano_datos / (filas * 3);    
+        int tamano_datos = num_sub_bloques * n * sizeof(int);
         Mat imagen_recuperada;
         start = chrono::high_resolution_clock::now();
-        memoria_a_imagen(result_ptr, filas, columnas, imagen_recuperada);
+        memoria_a_imagen(result_ptr, imagen.rows, imagen.cols, imagen_recuperada);
         end = chrono::high_resolution_clock::now();
         auto duracion_memoria_a_imagen = chrono::duration_cast<chrono::milliseconds>(end - start);
         cout << "Tiempo para convertir el bloque unificado a una imagen en OpenCV: " << duracion_memoria_a_imagen.count() << " ms" << endl;
@@ -190,4 +188,3 @@ int main() {
     }
     return 0;
 }
-
