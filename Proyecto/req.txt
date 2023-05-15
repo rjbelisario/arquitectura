@@ -8,3 +8,7 @@ g++ -o imagen imagen.o -L /usr/local/lib -lopencv_core -lopencv_highgui -lopencv
 entorno xubuntu 22.04
 g++ -std=c++11 -c imagen.o imagen.cpp -I /usr/include/opencv4
 g++ -o imagen imagen.o -L /usr/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs
+
+
+sin opencv
+$ g++ -o hello <file_name>.cpp    
