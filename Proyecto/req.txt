@@ -1,7 +1,12 @@
 sudo apt-get install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
 sudo apt-get install libopencv-dev
 
-g++ -std=c++11 -c chunk chunk.cpp -I /usr/local/include/opencv4
+g++ -std=c++11 -c chunk chunk.cpp -I /usr/local/include/opencv2
 g++ -o chunk chunk.o -L /usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc
 
 env Ubuntu 14.04
+
+Windows
+instalamos opencv
+g++ -std=c++11 -c image image.cpp -I C:\opencv\build\include\opencv2
+g++ image.o -o image.exe -L C:\opencv\build\x64\vc15\lib -lopencv_core -lopencv_highgui -lopencv_imgproc
