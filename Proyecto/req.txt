@@ -8,5 +8,5 @@ env Ubuntu 14.04
 
 Windows
 instalamos opencv
-g++ -std=c++11 -c image image.cpp -I C:\opencv\build\include\opencv2
-g++ image.o -o image.exe -L C:\opencv\build\x64\vc15\lib -lopencv_core -lopencv_highgui -lopencv_imgproc
+g++ -std=c++11 -c imagen imagen.cpp -I C:\opencv\build\include\opencv2
+g++ imagen.o -o imagen.exe -L C:\opencv\build\x64\vc15\lib -lopencv_core -lopencv_highgui -lopencv_imgproc
