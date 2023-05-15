@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <iostream>
 #include <chrono>
+#include <limits>
 #include <opencv2/opencv.hpp>
  
 using namespace std;
@@ -102,71 +103,88 @@ void imagen_a_memoria(const Mat& imagen, int*& memoria, int& tamano) {
 }
  
 int main() {
+    string archivo_entrada;
     int* memoria;
     int tamano;
+    int n;
+    cout << "Ingrese el nombre de la imagen incluyendo la extension: ";
+    cin >> archivo_entrada;
+    if (ifstream(archivo_entrada)) {
+        do {
+            cout << "Tamano de los subvectores: ";
+            cin >> n;
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Debe ingresar un numero entero." << endl;
+                n = 0;
+            }else if (n==0)
+                cout << "Debe ser mayor a cero." << endl;
+            else if (n < 0) {
+                cout << "Debe ser un numero positivo." << endl;
+            }
+        } while (n < 1 );
  
-    // Cargar la imagen en OpenCV
-    Mat imagen = imread("imagen.jpg", IMREAD_COLOR);
-    if (imagen.empty()) {
-        cerr << "Error al cargar la imagen" << endl;
-        return -1;
+        // Cargar la imagen en OpenCV
+        Mat imagen = imread(archivo_entrada, IMREAD_COLOR);
+        if (imagen.empty()) {
+            cerr << "Error al cargar la imagen" << endl;
+            return -1;
+        }
+     
+        // Convertir la imagen a memoria mapeada
+        auto start = chrono::high_resolution_clock::now();
+        imagen_a_memoria(imagen, memoria, tamano);
+        auto end = chrono::high_resolution_clock::now();
+        auto duracion_imagen_a_memoria = chrono::duration_cast<chrono::milliseconds>(end - start);
+        cout << "Tiempo para convertir la imagen a memoria mapeada: " << duracion_imagen_a_memoria.count() << " ms" << endl;
+        int* sub_bloques;
+        int num_sub_bloques;
+     
+        // Dividir la memoria mapeada en sub-bloques
+        start = chrono::high_resolution_clock::now();
+        divide_mmap(memoria, tamano, n, &sub_bloques, num_sub_bloques);
+        end = chrono::high_resolution_clock::now();
+        auto duracion_divide_mmap = chrono::duration_cast<chrono::milliseconds>(end - start);
+        cout << "Tiempo para dividir la memoria mapeada en sub-bloques: " << duracion_divide_mmap.count() << " ms" << endl;
+     
+        // Guardar los sub-bloques en un archivo
+        start = chrono::high_resolution_clock::now();
+        guardar_chunks_mmap(sub_bloques, num_sub_bloques * n, n, "chunks.txt");
+        end = chrono::high_resolution_clock::now();
+        auto duracion_guardar_chunks_mmap = chrono::duration_cast<chrono::milliseconds>(end - start);
+        cout << "Tiempo para guardar los sub-bloques en un archivo: " << duracion_guardar_chunks_mmap.count() << " ms" << endl;
+     
+        int* result_ptr;
+     
+        // Cargar los sub-bloques desde el archivo y unificarlos en un solo bloque
+        start = chrono::high_resolution_clock::now();
+        result_ptr = static_cast<int*>(malloc(num_sub_bloques * n * sizeof(int)));
+        cargar_datos_mmap(&sub_bloques, num_sub_bloques, n, result_ptr, "chunks.txt");
+        end = chrono::high_resolution_clock::now();
+        auto duracion_cargar_datos_mmap = chrono::duration_cast<chrono::milliseconds>(end - start);
+        cout << "Tiempo para cargar los sub-bloques desde el archivo y unificarlos en un solo bloque: " << duracion_cargar_datos_mmap.count() << " ms" << endl;
+     
+        // Convertir el bloque unificado a una imagen en OpenCV
+     
+        int tamano_datos = num_sub_bloques * n * sizeof(int);
+        Mat imagen_recuperada;
+        start = chrono::high_resolution_clock::now();
+        memoria_a_imagen(result_ptr, imagen.rows, imagen.cols, imagen_recuperada);
+        end = chrono::high_resolution_clock::now();
+        auto duracion_memoria_a_imagen = chrono::duration_cast<chrono::milliseconds>(end - start);
+        cout << "Tiempo para convertir el bloque unificado a una imagen en OpenCV: " << duracion_memoria_a_imagen.count() << " ms" << endl;
+     
+        // Mostrar la imagen recuperada en OpenCV
+        namedWindow("Imagen recuperada", WINDOW_NORMAL);
+        imshow("Imagen recuperada", imagen_recuperada);
+        waitKey(0);
+     
+        // Liberar la memoria mapeada
+        munmap(memoria, tamano);
+        munmap(result_ptr, num_sub_bloques * n * sizeof(int));
+    } else {
+        cout << "No ha generado el archivo de entrada " << archivo_entrada << "." << endl;
     }
- 
-    // Convertir la imagen a memoria mapeada
-    auto start = chrono::high_resolution_clock::now();
-    imagen_a_memoria(imagen, memoria, tamano);
-    auto end = chrono::high_resolution_clock::now();
-    auto duracion_imagen_a_memoria = chrono::duration_cast<chrono::milliseconds>(end - start);
-    cout << "Tiempo para convertir la imagen a memoria mapeada: " << duracion_imagen_a_memoria.count() << " ms" << endl;
- 
-    int n = 10;
-    int* sub_bloques;
-    int num_sub_bloques;
- 
-    // Dividir la memoria mapeada en sub-bloques
-    start = chrono::high_resolution_clock::now();
-    divide_mmap(memoria, tamano, n, &sub_bloques, num_sub_bloques);
-    end = chrono::high_resolution_clock::now();
-    auto duracion_divide_mmap = chrono::duration_cast<chrono::milliseconds>(end - start);
-    cout << "Tiempo para dividir la memoria mapeada en sub-bloques: " << duracion_divide_mmap.count() << " ms" << endl;
- 
-    // Guardar los sub-bloques en un archivo
-    start = chrono::high_resolution_clock::now();
-    guardar_chunks_mmap(sub_bloques, num_sub_bloques * n, n, "chunks.txt");
-    end = chrono::high_resolution_clock::now();
-    auto duracion_guardar_chunks_mmap = chrono::duration_cast<chrono::milliseconds>(end - start);
-    cout << "Tiempo para guardar los sub-bloques en un archivo: " << duracion_guardar_chunks_mmap.count() << " ms" << endl;
- 
-    int* result_ptr;
- 
-    // Cargar los sub-bloques desde el archivo y unificarlos en un solo bloque
-    start = chrono::high_resolution_clock::now();
-    result_ptr = static_cast<int*>(malloc(num_sub_bloques * n * sizeof(int)));
-    cargar_datos_mmap(&sub_bloques, num_sub_bloques, n, result_ptr, "chunks.txt");
-    end = chrono::high_resolution_clock::now();
-    auto duracion_cargar_datos_mmap = chrono::duration_cast<chrono::milliseconds>(end - start);
-    cout << "Tiempo para cargar los sub-bloques desde el archivo y unificarlos en un solo bloque: " << duracion_cargar_datos_mmap.count() << " ms" << endl;
- 
-    // Convertir el bloque unificado a una imagen en OpenCV
- 
-    int tamano_datos = num_sub_bloques * n * sizeof(int)/4;
-    int filas = sqrt(tamano_datos / 3);
-    int columnas = tamano_datos / (filas * 3);    
-    Mat imagen_recuperada;
-    start = chrono::high_resolution_clock::now();
-    memoria_a_imagen(result_ptr, filas, columnas, imagen_recuperada);
-    end = chrono::high_resolution_clock::now();
-    auto duracion_memoria_a_imagen = chrono::duration_cast<chrono::milliseconds>(end - start);
-    cout << "Tiempo para convertir el bloque unificado a una imagen en OpenCV: " << duracion_memoria_a_imagen.count() << " ms" << endl;
- 
-    // Mostrar la imagen recuperada en OpenCV
-    namedWindow("Imagen recuperada", WINDOW_NORMAL);
-    imshow("Imagen recuperada", imagen_recuperada);
-    waitKey(0);
- 
-    // Liberar la memoria mapeada
-    munmap(memoria, tamano);
-    munmap(result_ptr, num_sub_bloques * n * sizeof(int));
- 
     return 0;
 }
