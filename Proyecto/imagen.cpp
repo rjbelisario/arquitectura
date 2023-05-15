@@ -176,9 +176,7 @@ int main() {
         cout << "Tiempo para convertir el bloque unificado a una imagen en OpenCV: " << duracion_memoria_a_imagen.count() << " ms" << endl;
      
         // Mostrar la imagen recuperada en OpenCV
-        namedWindow("Imagen recuperada", WINDOW_NORMAL);
-        imshow("Imagen recuperada", imagen_recuperada);
-        waitKey(0);
+    	imwrite("recuperacion_" + archivo_entrada, imagen_recuperada);
      
         // Liberar la memoria mapeada
         munmap(memoria, tamano);
