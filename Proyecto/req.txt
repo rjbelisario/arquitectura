@@ -2,10 +2,14 @@ sudo apt-get install build-essential cmake git libgtk2.0-dev pkg-config libavcod
 sudo apt-get install libopencv-dev
 
 entorno Ubuntu 14.04 (probar)
+g++ -std=c++11 -o imagen imagen.cpp -I /usr/local/include/opencv4 -L /usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs
+
 g++ -std=c++11 -c imagen.o imagen.cpp -I /usr/local/include/opencv4
 g++ -o imagen imagen.o -L /usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc
 
 entorno xubuntu 22.04
+g++ -std=c++11 -o imagen imagen.cpp -I /usr/include/opencv4 -L /usr/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs
+
 g++ -std=c++11 -c imagen.o imagen.cpp -I /usr/include/opencv4
 g++ -o imagen imagen.o -L /usr/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs
 
