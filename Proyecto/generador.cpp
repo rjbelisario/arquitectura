@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#define N 9
 
 using namespace std;
 
@@ -8,7 +9,7 @@ int main() {
     int tamano, aleatorio;
     random_device n_aleatorio;
     mt19937 mt(n_aleatorio());
-    uniform_int_distribution<int> dist(1, 100);
+    uniform_int_distribution<int> dist(1, N);
     cout << "Ingrese el tamaño en numeros entero: ";
     cin >> tamano;
     // Genera el archivo
