@@ -6,17 +6,17 @@
 using namespace std;
 
 int main() {
-    int tamano, aleatorio;
+    int tamano_vector, aleatorio;
     random_device n_aleatorio;
     mt19937 mt(n_aleatorio());
     uniform_int_distribution<int> dist(1, N);
     cout << "Ingrese el tamaño en numeros entero: ";
-    cin >> tamano;
+    cin >> tamano_vector;
     // Genera el archivo
     ofstream archivo("archivo.txt");
-    archivo << tamano << ' ' <<endl; // tamaño en la primera posicion
+    archivo << tamano_vector << ' ' <<endl; // tamaño en la primera posicion
     // llena el archivo
-    for (int i = 0; i < tamano; ++i) {
+    for (int i = 0; i < tamano_vector; ++i) {
         aleatorio = dist(n_aleatorio);
         archivo << aleatorio << " ";
     }
