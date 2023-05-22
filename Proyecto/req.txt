@@ -15,4 +15,4 @@ g++ -o imagen imagen.o -L /usr/lib -lopencv_core -lopencv_highgui -lopencv_imgpr
 
 
 sin opencv
-$ g++ -o hello <file_name>.cpp    
+$ g++ -std=c++11 -o <ejecutable> <archivo>.cpp 
